@@ -8,16 +8,46 @@
 <body>
 
   <button id="afegirTasca">+</button>
-  <h2>TASKLIST</h2>
-  <ul id="taskList">
-    <li>FER LA COMPRA <span><button class="edit">edit</button><button class="delete">X</button></span></li>
-    <li>ACABAR EXERCICI TASKLIST <span><button class="edit">edit</button><button class="delete">X</button></span></li>
-    <li>TRUCAR AL METGE <span><button class="edit">edit</button><button class="delete">X</button></span></li>
+  <h2>LLISTA DE TASQUES</h2>
+  <ul id="llistaTasques">
+
   </ul>
 
   <script>
+      function afegirBotonsTasca(lli) {
 
+          let eliminar = document.createElement("button");
+          eliminar.textContent = "X";
+          eliminar.classList.add('eliminar');
+          eliminar.onclick = function() { lli.remove(); };
+          lli.appendChild(eliminar);
+
+
+          let editar = document.createElement("button");
+          editar.textContent = "edit";
+          editar.classList.add('editar');
+          editar.onclick = function() {
+              let novaTasca = prompt("edita la tasca escollida", lli.firstChild.textContent);
+              if (novaTasca) {
+                  lli.firstChild.textContent = novaTasca;
+              }
+          };
+          lli.appendChild(editar);
+      }
+
+      document.getElementById("afegirTasca").onclick = function() {
+          let tasca = prompt("introdueix nova tasca: ");
+          if (tasca) {
+              let lli = document.createElement("li");
+              lli.textContent = tasca;
+
+              afegirBotonsTasca(lli);
+
+              document.getElementById("llistaTasques").appendChild(lli);
+          }
+      };
   </script>
 
 </body>
 </html>
+
