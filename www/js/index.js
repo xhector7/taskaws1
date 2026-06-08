@@ -22,8 +22,103 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
-    // Cordova is now initialized. Have fun!
 
-    console.log('Running cordova-' + cordova.platformId + '@' + cordova.version);
-    document.getElementById('deviceready').classList.add('ready');
+    carregarTasques();
+
+    $("#llistaTasques").sortable({
+        update: function () {
+            guardarTasques();
+        }
+    });
+
+    document.getElementById("afegirTasca")
+        .addEventListener("click", afegirTasca);
+}
+
+function afegirTasca() {
+
+    let text = prompt("Introdueix una nova tasca:");
+
+    if (!text || text.trim() === "") {
+        return;
+    }
+
+    crearTasca(text);
+
+    guardarTasques();
+}
+
+function crearTasca(text) {
+
+    let li = document.createElement("li");
+
+    let span = document.createElement("span");
+    span.textContent = text;
+
+    li.appendChild(span);
+
+    let btnEditar = document.createElement("button");
+    btnEditar.textContent = "Editar";
+
+    btnEditar.addEventListener("click", function () {
+
+        let nouText = prompt(
+            "Edita la tasca:",
+            span.textContent
+        );
+
+        if (nouText && nouText.trim() !== "") {
+
+            span.textContent = nouText;
+
+            guardarTasques();
+        }
+    });
+
+    let btnEliminar = document.createElement("button");
+    btnEliminar.textContent = "X";
+
+    btnEliminar.addEventListener("click", function () {
+
+        li.remove();
+
+        guardarTasques();
+    });
+
+    li.appendChild(btnEditar);
+    li.appendChild(btnEliminar);
+
+    document
+        .getElementById("llistaTasques")
+        .appendChild(li);
+}
+
+function guardarTasques() {
+
+    let tasques = [];
+
+    document
+        .querySelectorAll("#llistaTasques li span")
+        .forEach(span => {
+
+            tasques.push(span.textContent);
+
+        });
+
+    localStorage.setItem(
+        "tasques",
+        JSON.stringify(tasques)
+    );
+}
+
+function carregarTasques() {
+
+    let tasques =
+        JSON.parse(
+            localStorage.getItem("tasques")
+        ) || [];
+
+    tasques.forEach(tasca => {
+        crearTasca(tasca);
+    });
 }

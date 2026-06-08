@@ -1,53 +1,28 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <title>tasklist v01 hector</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskList</title>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
 </head>
 <body>
 
-  <button id="afegirTasca">+</button>
-  <h2>LLISTA DE TASQUES</h2>
-  <ul id="llistaTasques">
+    <h2>LLISTA DE TASQUES</h2>
 
-  </ul>
+    <button id="afegirTasca">+</button>
 
-  <script>
-      function afegirBotonsTasca(lli) {
+    <ul id="llistaTasques"></ul>
 
-          let eliminar = document.createElement("button");
-          eliminar.textContent = "X";
-          eliminar.classList.add('eliminar');
-          eliminar.onclick = function() { lli.remove(); };
-          lli.appendChild(eliminar);
+    <script src="cordova.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-          let editar = document.createElement("button");
-          editar.textContent = "edit";
-          editar.classList.add('editar');
-          editar.onclick = function() {
-              let novaTasca = prompt("edita la tasca escollida", lli.firstChild.textContent);
-              if (novaTasca) {
-                  lli.firstChild.textContent = novaTasca;
-              }
-          };
-          lli.appendChild(editar);
-      }
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 
-      document.getElementById("afegirTasca").onclick = function() {
-          let tasca = prompt("introdueix nova tasca: ");
-          if (tasca) {
-              let lli = document.createElement("li");
-              lli.textContent = tasca;
-
-              afegirBotonsTasca(lli);
-
-              document.getElementById("llistaTasques").appendChild(lli);
-          }
-      };
-  </script>
+    <script src="js/index.js"></script>
 
 </body>
 </html>
-
